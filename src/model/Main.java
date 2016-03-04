@@ -5,4 +5,8 @@ package model;
  */
 public class Main {
 
+    public static void main(String [] args) {
+        Rumeur r = new Rumeur(50);
+
+    }
 }
