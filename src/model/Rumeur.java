@@ -26,17 +26,14 @@ public class Rumeur {
         Personne p;
 
         for(int i =0 ; i < this.nbPersonnes ; ++i) {
-            int random = (int)(Math.random() * (3-1)) + 1;
+            int random = (int)(Math.random() * (2)) + 1;
+            System.out.println(random);
             switch (random) {
                 case 1:
                     p = new Personne(i,Etat.Ignorant);
                     personnes.add(p);
                     break;
                 case 2:
-                    p = new Personne(i,Etat.Diffuseur);
-                    personnes.add(p);
-                    break;
-                case 3:
                     p = new Personne(i,Etat.Etouffeur);
                     personnes.add(p);
                     break;
