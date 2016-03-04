@@ -11,10 +11,15 @@ public class Rumeur {
     public List<Personne> personnes = new ArrayList<Personne>();
     public int nbPersonnes;
 
-    public Rumeur(int nbPersonnes) {
+    public Rumeur(int nbPersonnes) throws InterruptedException {
         this.nbPersonnes = nbPersonnes;
         creerPersonnes(this.nbPersonnes);
         lierPersonnes();
+
+        int idPremier = (int)(Math.random() * (this.nbPersonnes));
+        Personne premier = personnes.get(idPremier);
+        lancerRumeur(premier);
+
     }
 
     public void creerPersonnes(int nbPersonnes) {
@@ -64,6 +69,29 @@ public class Rumeur {
             System.out.println("Personne " + p.getId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
         }
         System.err.println("nb "+personnes.size());
+    }
+
+    public void lancerRumeur(Personne p) throws InterruptedException {
+        List<Personne> mesVoisins = p.getVoisins();
+
+        p.changerEtat();
+        if(p.getEtat() == Etat.Diffuseur) {
+            int tauxTransmission;
+            int probabilité;
+
+            for (Personne voisin: mesVoisins) {
+                tauxTransmission = (int)(Math.random() * (100));
+                probabilité = (int)(Math.random() * (100));
+                if(probabilité > tauxTransmission) {
+                    voisin.changerEtat();
+                    if(voisin.getEtat() == Etat.Diffuseur) {
+                        wait(1000);
+                        lancerRumeur(voisin);
+                    }
+                }
+            }
+        }
+
     }
 
     public List<Personne> getPersonnes() {

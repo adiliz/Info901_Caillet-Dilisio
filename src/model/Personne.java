@@ -17,7 +17,7 @@ public class Personne {
         this.etat = etat;
     }
 
-    public void changerEtat(Personne p) {
+    public void changerEtat() {
         if(this.etat == Etat.Ignorant) {
             this.etat = Etat.Diffuseur;
         }
