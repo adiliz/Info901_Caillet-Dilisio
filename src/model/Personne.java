@@ -12,10 +12,12 @@ public class Personne {
     private Etat etat;
     private List<Personne> voisins = new ArrayList<Personne>();
 
+
     public Personne(int id, Etat etat) {
         this.id = id;
         this.etat = etat;
     }
+
 
     public void changerEtat() {
         if(this.etat == Etat.Ignorant) {
@@ -39,7 +41,7 @@ public class Personne {
         this.voisins = voisins;
     }
 
-    public int getId() {
+    public int getMyId() {
         return id;
     }
 

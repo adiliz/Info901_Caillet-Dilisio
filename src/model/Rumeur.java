@@ -15,19 +15,13 @@ public class Rumeur {
         this.nbPersonnes = nbPersonnes;
         creerPersonnes(this.nbPersonnes);
         lierPersonnes();
-
-        int idPremier = (int)(Math.random() * (this.nbPersonnes));
-        Personne premier = personnes.get(idPremier);
-        lancerRumeur(premier);
-
     }
 
     public void creerPersonnes(int nbPersonnes) {
         Personne p;
 
         for(int i =0 ; i < this.nbPersonnes ; ++i) {
-            int random = (int)(Math.random() * (2)) + 1;
-            System.out.println(random);
+            int random = (int)(Math.random() * (4)) + 1;
             switch (random) {
                 case 1:
                     p = new Personne(i,Etat.Ignorant);
@@ -47,7 +41,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (3-1)+ 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/5) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
@@ -63,15 +57,17 @@ public class Rumeur {
                     }
                 }
             }
-            System.out.println("Personne " + p.getId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
+            System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
         }
         System.err.println("nb "+personnes.size());
     }
 
-    public void lancerRumeur(Personne p) throws InterruptedException {
+    public void lancerRumeur(Personne p, RumeurGraphique rg) throws InterruptedException {
         List<Personne> mesVoisins = p.getVoisins();
 
         p.changerEtat();
+        rg.update();
+        System.out.println(p.getEtat());
         if(p.getEtat() == Etat.Diffuseur) {
             int tauxTransmission;
             int probabilité;
@@ -82,14 +78,32 @@ public class Rumeur {
                 if(probabilité > tauxTransmission) {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
-                        Thread.sleep(1000);
-                        lancerRumeur(voisin);
+                        Thread.sleep(500);
+                        System.out.println("Changement");
+                        if(! verifFinRumeur()) {
+                            lancerRumeur(voisin, rg);
+                        }
+                        else {
+                            System.out.println("Fin de la propoagtion de rumeur");
+                        }
                     }
+                }else {
+                    p.setEtat(Etat.Etouffeur);
                 }
             }
         }
 
     }
+
+    public boolean verifFinRumeur() {
+        for (Personne p: getPersonnes()) {
+            if(p.getEtat() == Etat.Diffuseur) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public List<Personne> getPersonnes() {
         return personnes;
