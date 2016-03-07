@@ -41,7 +41,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/5) + 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/2) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
@@ -79,13 +79,7 @@ public class Rumeur {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
                         Thread.sleep(500);
-                        System.out.println("Changement");
-                        if(! verifFinRumeur()) {
                             lancerRumeur(voisin, rg);
-                        }
-                        else {
-                            System.out.println("Fin de la propoagtion de rumeur");
-                        }
                     }
                 }else {
                     p.setEtat(Etat.Etouffeur);
