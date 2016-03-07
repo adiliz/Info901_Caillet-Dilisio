@@ -82,7 +82,7 @@ public class Rumeur {
                 if(probabilité > tauxTransmission) {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
-                        wait(1000);
+                        Thread.sleep(1000);
                         lancerRumeur(voisin);
                     }
                 }
