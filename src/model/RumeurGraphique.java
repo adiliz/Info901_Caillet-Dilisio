@@ -86,6 +86,12 @@ public class RumeurGraphique {
         int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));
         Personne premier = rg.rumeur.getPersonnes().get(idPremier);
         rg.rumeur.lancerRumeur(premier, rg);
+        rg.update();
+        if(rg.rumeur.verifFinRumeur()) {
+            System.out.println("Fin de la propoagtion de rumeur");
+            javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur");
+        }
+
 
     }
 

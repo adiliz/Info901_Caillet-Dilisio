@@ -6,19 +6,18 @@ import java.util.List;
 /**
  * Created by Anthony on 03/03/2016.
  */
-public class Rumeur{
+public class Rumeur {
 
     public List<Personne> personnes = new ArrayList<Personne>();
     public int nbPersonnes;
 
     public Rumeur(int nbPersonnes) throws InterruptedException {
-        super();
         this.nbPersonnes = nbPersonnes;
-        creerPersonnes();
+        creerPersonnes(this.nbPersonnes);
         lierPersonnes();
     }
 
-    public void creerPersonnes() {
+    public void creerPersonnes(int nbPersonnes) {
         Personne p;
 
         for(int i =0 ; i < this.nbPersonnes ; ++i) {
@@ -42,7 +41,7 @@ public class Rumeur{
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (3/*this.nbPersonnes/15*/) + 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/5) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
@@ -62,9 +61,9 @@ public class Rumeur{
                     }
                 }
             }
-            System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().toString() + "}");
+            System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
         }
-        //System.err.println("nb "+personnes.size());
+        System.err.println("nb "+personnes.size());
     }
 
     public void lancerRumeur(Personne p, RumeurGraphique rg) throws InterruptedException {
