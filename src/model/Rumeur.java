@@ -1,5 +1,7 @@
 package model;
 
+import org.graphstream.graph.Edge;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/5) + 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/20) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
@@ -82,9 +84,19 @@ public class Rumeur {
                 if(probabilité > tauxTransmission) {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
-                        Thread.sleep(500);
                         System.out.println("Changement");
                         if(! verifFinRumeur()) {
+                            Edge edge = rg.graph.getEdge(p.getMyId() + "-" + voisin.getMyId());
+                            if (edge == null) {
+                                edge = rg.graph.getEdge(voisin.getMyId() + "-" + p.getMyId());
+                                edge.setAttribute("ui.class", "highlight");
+                                Thread.sleep(200);
+                                edge.clearAttributes();
+                            }else {
+                                edge.setAttribute("ui.class", "highlight");
+                                Thread.sleep(200);
+                                edge.clearAttributes();
+                            }
                             lancerRumeur(voisin, rg);
                         }
                         else {

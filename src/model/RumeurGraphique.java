@@ -22,7 +22,9 @@ public class RumeurGraphique {
     private static final String CSS= " node {size: 15px; fill-color : grey;}" +
             "node.ignorant {fill-color: green; }" +
             "node.diffuseur {fill-color: red; }" +
-            "node.etouffeur {fill-color: blue; }" ;
+            "node.etouffeur {fill-color: blue; }" +
+            "edge { size: 1px; }" +
+            "edge.highlight { fill-color: red; size: 3px;}" ;
 
     Rumeur rumeur;
     Graph graph;
@@ -30,6 +32,7 @@ public class RumeurGraphique {
     public RumeurGraphique(Rumeur rumeur) {
         this.rumeur = rumeur;
         this.graph = new SingleGraph("graph");
+
 
         //ADD NODES
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
@@ -80,13 +83,14 @@ public class RumeurGraphique {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur(1000));
+        RumeurGraphique rg = new RumeurGraphique(new Rumeur(100));
         rg.graph.display();
 
         int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));
         Personne premier = rg.rumeur.getPersonnes().get(idPremier);
         rg.rumeur.lancerRumeur(premier, rg);
         rg.update();
+
         if(rg.rumeur.verifFinRumeur()) {
             System.out.println("Fin de la propoagtion de rumeur");
             javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur");
