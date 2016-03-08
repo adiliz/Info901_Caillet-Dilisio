@@ -19,7 +19,7 @@ public class RumeurGraphique {
     private static final String COLOR_IGNORANT = "ignorant";
     private static final String COLOR_DIFFUSEUR = "diffuseur";
     private static final String COLOR_ETOUFFEUR = "etouffeur";
-    private static final String CSS= " node {fill-color : grey;}" +
+    private static final String CSS= " node {size: 15px; fill-color : grey;}" +
             "node.ignorant {fill-color: green; }" +
             "node.diffuseur {fill-color: red; }" +
             "node.etouffeur {fill-color: blue; }" ;
@@ -60,7 +60,7 @@ public class RumeurGraphique {
 
         for (Node n : graph.getEachNode()) {
             n.setAttribute("personne", rumeur.getPersonnes().get(i));
-            if (i < rumeur.getNbPersonnes()) { //TODO: il faut modifié cette fonction car elle est degeulasse
+            if (i < rumeur.getNbPersonnes()) { //TODO: il faut modifier cette fonction car elle est degeulasse
                 switch (rumeur.getPersonnes().get(i).getEtat()) {
                     case Etouffeur:
                         n.setAttribute("ui.class", COLOR_ETOUFFEUR);
@@ -80,7 +80,7 @@ public class RumeurGraphique {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur(100));
+        RumeurGraphique rg = new RumeurGraphique(new Rumeur(1000));
         rg.graph.display();
 
         int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));

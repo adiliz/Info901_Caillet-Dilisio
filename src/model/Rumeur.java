@@ -6,18 +6,19 @@ import java.util.List;
 /**
  * Created by Anthony on 03/03/2016.
  */
-public class Rumeur {
+public class Rumeur{
 
     public List<Personne> personnes = new ArrayList<Personne>();
     public int nbPersonnes;
 
     public Rumeur(int nbPersonnes) throws InterruptedException {
+        super();
         this.nbPersonnes = nbPersonnes;
-        creerPersonnes(this.nbPersonnes);
+        creerPersonnes();
         lierPersonnes();
     }
 
-    public void creerPersonnes(int nbPersonnes) {
+    public void creerPersonnes() {
         Personne p;
 
         for(int i =0 ; i < this.nbPersonnes ; ++i) {
@@ -41,7 +42,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/5) + 1);
+            int randomNbVoisins = (int)(Math.random() * (3/*this.nbPersonnes/15*/) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
@@ -50,16 +51,20 @@ public class Rumeur {
                     Personne voisin = personnes.get(randomVoisin);
                     if( !mesVoisins.contains(voisin) && p!= voisin ) {
                         mesVoisins.add(voisin);
-                        voisinCorrect = true;
+                        //personne1<-->personne2
+                        if (!personnes.get(randomVoisin).getVoisins().contains(p)) {
+                            personnes.get(randomVoisin).getVoisins().add(p);
+                            voisinCorrect = true;
+                        }
                     }
                     else {
                         randomVoisin = (int)(Math.random() * (this.nbPersonnes-1));
                     }
                 }
             }
-            System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
+            System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().toString() + "}");
         }
-        System.err.println("nb "+personnes.size());
+        //System.err.println("nb "+personnes.size());
     }
 
     public void lancerRumeur(Personne p, RumeurGraphique rg) throws InterruptedException {
