@@ -5,6 +5,9 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.View;
+import org.graphstream.ui.view.Viewer;
+
 
 import java.util.List;
 
@@ -20,13 +23,13 @@ public class RumeurGraphique {
     private static final String COLOR_IGNORANT = "ignorant";
     private static final String COLOR_DIFFUSEUR = "diffuseur";
     private static final String COLOR_ETOUFFEUR = "etouffeur";
-    private static final String CSS= " node {size: 15px; fill-color : grey;}" +
-            "node.ignorant {fill-color: green; }" +
-            "node.diffuseur {fill-color: red; }" +
-            "node.etouffeur {fill-color: blue; }" +
-            "edge { size: 1px; }" +
-            "edge.highlight { fill-color: red; size: 3px;}" +
-            "graph {fill-mode: gradient-vertical; fill-color: purple, blue, green, yellow, orange, red; } " ;
+    private static final String CSS= " node {size: 20px; fill-color : grey;  stroke-mode: plain; stroke-color: #999; shadow-mode: gradient-vertical; shadow-width: 4px; shadow-color: #999, white; shadow-offset: 0px;}" +
+            "node.ignorant {fill-color: rgba(128,255,0,180); }" +
+            "node.diffuseur {fill-color: rgba(255,51,51,140); }" +
+            "node.etouffeur {fill-color: rgba(0,128,255,180); }" +
+            "edge { size: 1px; fill-color: rgba(0,0,0,50); }" +
+            "edge.highlight {shape: blob; size: 3px; fill-color: rgba(255,51,51,180);}" +
+            "graph {fill-mode: image-scaled-ratio-max; fill-image: url('data/mapmonde.png'); }" ;
 
     Rumeur rumeur;
     Graph graph;
@@ -40,6 +43,7 @@ public class RumeurGraphique {
             Node n = graph.addNode(String.valueOf(rumeur.getPersonnes().get(i).getMyId()));
             n.setAttribute("personne", rumeur.getPersonnes().get(i));
             n.setAttribute("know", false);
+            n.setAttribute("ui.label", rumeur.getPersonnes().get(i).getMyId());
         }
 
         //ADD EDGES
@@ -86,8 +90,13 @@ public class RumeurGraphique {
     }
 
     public static void main(String[] args) throws InterruptedException {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
-        rg.graph.display();
+        Viewer viewer = rg.graph.display();
+        viewer.getDefaultView().resizeFrame(1440,900);
+
+
+
 
         int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));
         Personne premier = rg.rumeur.getPersonnes().get(idPremier);
