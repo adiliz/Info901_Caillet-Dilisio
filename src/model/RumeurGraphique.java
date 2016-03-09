@@ -123,6 +123,9 @@ public class RumeurGraphique {
             for (Personne voisin: mesVoisins) {
                 tauxTransmission = (float)(Math.random());
                 probabilité = (float) (Math.random());
+                if(this.rumeur.interet.equals(p.getInteret())) {
+                    probabilité = probabilité*2;
+                }
                 if(probabilité > tauxTransmission) {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
@@ -132,7 +135,7 @@ public class RumeurGraphique {
                                 edge = this.graph.getEdge(voisin.getMyId() + "-" + p.getMyId());
                                 edge.setAttribute("ui.class", "highlight");
                                 try {
-                                    Thread.sleep(200);
+                                    Thread.sleep(this.rumeur.vitesse);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -140,7 +143,7 @@ public class RumeurGraphique {
                             }else {
                                 edge.setAttribute("ui.class", "highlight");
                                 try {
-                                    Thread.sleep(200);
+                                    Thread.sleep(this.rumeur.vitesse);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -195,7 +198,7 @@ public class RumeurGraphique {
     }
 
     public static void main(String argv[]){
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
+        RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));
         rg.startGraph();
     }
 

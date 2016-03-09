@@ -121,7 +121,7 @@ public class Fenetre extends JFrame {
 
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
+                RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));
                 rg.startGraph();
             }
         });

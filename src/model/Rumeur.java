@@ -12,10 +12,22 @@ import java.util.List;
 public class Rumeur {
 
     public List<Personne> personnes = new ArrayList<Personne>();
-    public int nbPersonnes;
 
-    public Rumeur(int nbPersonnes) {
+    public String nom;
+    public Interet interet;
+    public int nbPersonnes;
+    public int nbVoisinsMax;
+    public int proportion;
+    public int vitesse;
+
+    public Rumeur(String nom, Interet interet, int nbPersonnes, int nbVoisinsMax, int proportion, int vitesse) {
+        this.nom = nom;
+        this.interet = interet;
         this.nbPersonnes = nbPersonnes;
+        this.nbVoisinsMax = nbVoisinsMax;
+        this.proportion = proportion;
+        this.vitesse = vitesse;
+
         creerPersonnes(this.nbPersonnes);
         lierPersonnes();
     }
@@ -24,7 +36,7 @@ public class Rumeur {
         Personne p;
 
         for(int i =0 ; i < this.nbPersonnes ; ++i) {
-            int random = (int)(Math.random() * (4)) + 1;
+            int random = (int)(Math.random() * (this.proportion)) + 1;
             switch (random) {
                 case 1:
                     p = new Personne(i,Etat.Ignorant);
@@ -44,7 +56,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/30) + 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbVoisinsMax) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;
