@@ -1,5 +1,6 @@
 package model;
 
+import org.graphstream.algorithm.randomWalk.RandomWalk;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -24,7 +25,8 @@ public class RumeurGraphique {
             "node.diffuseur {fill-color: red; }" +
             "node.etouffeur {fill-color: blue; }" +
             "edge { size: 1px; }" +
-            "edge.highlight { fill-color: red; size: 3px;}" ;
+            "edge.highlight { fill-color: red; size: 3px;}" +
+            "graph {fill-mode: gradient-vertical; fill-color: purple, blue, green, yellow, orange, red; } " ;
 
     Rumeur rumeur;
     Graph graph;
@@ -32,7 +34,6 @@ public class RumeurGraphique {
     public RumeurGraphique(Rumeur rumeur) {
         this.rumeur = rumeur;
         this.graph = new SingleGraph("graph");
-
 
         //ADD NODES
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
@@ -56,6 +57,7 @@ public class RumeurGraphique {
                 }
             }
         }
+        graph.removeAttribute("ui.stylesheet");
         graph.addAttribute("ui.stylesheet", CSS);
     }
 
@@ -84,7 +86,7 @@ public class RumeurGraphique {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur(100));
+        RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
         rg.graph.display();
 
         int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));
@@ -104,7 +106,7 @@ public class RumeurGraphique {
             }
         }
 
-        System.out.println(infected + "/" + rg.rumeur.getPersonnes() + "infected");
+        System.out.println(infected + "/" + rg.rumeur.getPersonnes().size() + "infected");
 
 
     }

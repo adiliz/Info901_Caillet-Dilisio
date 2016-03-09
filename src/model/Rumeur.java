@@ -105,9 +105,9 @@ public class Rumeur {
                         else {
                             System.out.println("Fin de la propoagtion de rumeur");
                         }
+                    }if (voisin.getEtat().equals(Etat.Etouffeur)){
+                        p.setEtat(Etat.Etouffeur);
                     }
-                }else {
-                    p.setEtat(Etat.Etouffeur);
                 }
             }
         }
