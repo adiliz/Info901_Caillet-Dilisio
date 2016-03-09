@@ -38,6 +38,7 @@ public class RumeurGraphique {
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
             Node n = graph.addNode(String.valueOf(rumeur.getPersonnes().get(i).getMyId()));
             n.setAttribute("personne", rumeur.getPersonnes().get(i));
+            n.setAttribute("know", false);
         }
 
         //ADD EDGES
@@ -95,6 +96,15 @@ public class RumeurGraphique {
             System.out.println("Fin de la propoagtion de rumeur");
             javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur");
         }
+
+        int infected = 0;
+        for (Node n : rg.graph.getEachNode()) {
+            if(n.getAttribute("know")){
+                infected ++;
+            }
+        }
+
+        System.out.println(infected + "/" + rg.rumeur.getPersonnes() + "infected");
 
 
     }

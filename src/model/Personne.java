@@ -10,6 +10,7 @@ public class Personne {
 
     private int id;
     private Etat etat;
+    private Interet interet;
     private List<Personne> voisins = new ArrayList<Personne>();
 
 

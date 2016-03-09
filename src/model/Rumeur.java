@@ -1,6 +1,7 @@
 package model;
 
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,19 +73,21 @@ public class Rumeur {
         List<Personne> mesVoisins = p.getVoisins();
 
         p.changerEtat();
+
         rg.update();
         System.out.println(p.getEtat());
         if(p.getEtat() == Etat.Diffuseur) {
-            int tauxTransmission;
-            int probabilité;
+            Node node = rg.graph.getNode(p.getMyId());
+            node.setAttribute("know", true);
+            float tauxTransmission;
+            float probabilité;
 
             for (Personne voisin: mesVoisins) {
-                tauxTransmission = (int)(Math.random() * (100));
-                probabilité = (int)(Math.random() * (100));
+                tauxTransmission = (float)(Math.random());
+                probabilité = (float) (Math.random());
                 if(probabilité > tauxTransmission) {
                     voisin.changerEtat();
                     if(voisin.getEtat() == Etat.Diffuseur) {
-                        System.out.println("Changement");
                         if(! verifFinRumeur()) {
                             Edge edge = rg.graph.getEdge(p.getMyId() + "-" + voisin.getMyId());
                             if (edge == null) {
