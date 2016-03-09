@@ -44,7 +44,7 @@ public class Rumeur {
 
     public void lierPersonnes() {
         for (Personne p: personnes) {
-            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/20) + 1);
+            int randomNbVoisins = (int)(Math.random() * (this.nbPersonnes/30) + 1);
             List<Personne> mesVoisins = p.getVoisins();
             for (int i=0 ; i < randomNbVoisins ; ++i) {
                 Boolean voisinCorrect = false;

@@ -27,7 +27,7 @@ public class RumeurGraphique {
             "node.ignorant {fill-color: rgba(128,255,0,180); }" +
             "node.diffuseur {fill-color: rgba(255,51,51,140); }" +
             "node.etouffeur {fill-color: rgba(0,128,255,180); }" +
-            "edge { size: 1px; fill-color: rgba(0,0,0,50); }" +
+            "edge { size: 1px; fill-color: rgba(0,0,0,50); shape: cubic-curve; }" +
             "edge.highlight {shape: blob; size: 3px; fill-color: rgba(255,51,51,180);}" +
             "graph {fill-mode: image-scaled-ratio-max; fill-image: url('data/mapmonde.png'); }" ;
 
@@ -44,7 +44,29 @@ public class RumeurGraphique {
             n.setAttribute("personne", rumeur.getPersonnes().get(i));
             n.setAttribute("know", false);
             n.setAttribute("ui.label", rumeur.getPersonnes().get(i).getMyId());
+
+            int WestEst = (int) (Math.random() * 3) + 1;
+
+
+            int p1, p2 = 0;
+
+            if (WestEst > 3) {
+                p1 = (int)(Math.random() * (15-1)) ;
+            }else{
+                p1 = (int)(Math.random() * (70-30)) + 30;
+            }
+
+
+
+            p2 = (int) (Math.random() * 25) + 10;
+
+
+
+            n.setAttribute("xy", p1, p2);
+
         }
+
+
 
         //ADD EDGES
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
@@ -92,7 +114,7 @@ public class RumeurGraphique {
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
-        Viewer viewer = rg.graph.display();
+        Viewer viewer = rg.graph.display(false);
         viewer.getDefaultView().resizeFrame(1440,900);
 
 
