@@ -1,11 +1,9 @@
 package model;
 
-import org.graphstream.algorithm.randomWalk.RandomWalk;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
 
@@ -27,7 +25,7 @@ public class RumeurGraphique {
             "node.ignorant {fill-color: rgba(128,255,0,180); }" +
             "node.diffuseur {fill-color: rgba(255,51,51,140); }" +
             "node.etouffeur {fill-color: rgba(0,128,255,180); }" +
-            "edge { size: 1px; fill-color: rgba(0,0,0,50); shape: cubic-curve; }" +
+            "edge { size: 1px; fill-color: rgba(0,0,0,50); }" +
             "edge.highlight {shape: blob; size: 3px; fill-color: rgba(255,51,51,180);}" +
             "graph {fill-mode: image-scaled-ratio-max; fill-image: url('data/mapmonde.png'); }" ;
 
@@ -66,8 +64,6 @@ public class RumeurGraphique {
 
         }
 
-
-
         //ADD EDGES
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
            Node n = graph.getNode(String.valueOf(i));
@@ -90,10 +86,10 @@ public class RumeurGraphique {
     public void update(){
         int i = 0;
 
-        for (Node n : graph.getEachNode()) {
-            n.setAttribute("personne", rumeur.getPersonnes().get(i));
-            if (i < rumeur.getNbPersonnes()) { //TODO: il faut modifier cette fonction car elle est degeulasse
-                switch (rumeur.getPersonnes().get(i).getEtat()) {
+        for (Node n : this.graph.getEachNode()) {
+            n.setAttribute("personne", this.rumeur.getPersonnes().get(i));
+            if (i < this.rumeur.getNbPersonnes()) { //TODO: il faut modifier cette fonction car elle est degeulasse
+                switch (this.rumeur.getPersonnes().get(i).getEtat()) {
                     case Etouffeur:
                         n.setAttribute("ui.class", COLOR_ETOUFFEUR);
                         break;
@@ -111,35 +107,96 @@ public class RumeurGraphique {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public void lancerRumeur(Personne p) {
+        List<Personne> mesVoisins = p.getVoisins();
+
+        p.changerEtat();
+
+        this.update();
+        System.out.println(p.getEtat());
+        if(p.getEtat() == Etat.Diffuseur) {
+            Node node = this.graph.getNode(p.getMyId());
+            node.setAttribute("know", true);
+            float tauxTransmission;
+            float probabilité;
+
+            for (Personne voisin: mesVoisins) {
+                tauxTransmission = (float)(Math.random());
+                probabilité = (float) (Math.random());
+                if(probabilité > tauxTransmission) {
+                    voisin.changerEtat();
+                    if(voisin.getEtat() == Etat.Diffuseur) {
+                        if(! verifFinRumeur()) {
+                            Edge edge = this.graph.getEdge(p.getMyId() + "-" + voisin.getMyId());
+                            if (edge == null) {
+                                edge = this.graph.getEdge(voisin.getMyId() + "-" + p.getMyId());
+                                edge.setAttribute("ui.class", "highlight");
+                                try {
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                edge.clearAttributes();
+                            }else {
+                                edge.setAttribute("ui.class", "highlight");
+                                try {
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                edge.clearAttributes();
+                            }
+                            lancerRumeur(voisin);
+                        }
+                        else {
+                            System.out.println("Fin de la propoagtion de rumeur");
+                        }
+                    }if (voisin.getEtat().equals(Etat.Etouffeur)){
+                        p.setEtat(Etat.Etouffeur);
+                    }
+                }
+            }
+        }
+
+    }
+
+    public boolean verifFinRumeur() {
+        for (Personne p: this.rumeur.getPersonnes()) {
+            if(p.getEtat() == Etat.Diffuseur) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void startGraph() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
-        Viewer viewer = rg.graph.display(false);
+        Viewer viewer = this.graph.display();
         viewer.getDefaultView().resizeFrame(1440,900);
 
+        int idPremier = (int) (Math.random() * (this.rumeur.getNbPersonnes()));
+        Personne premier = this.rumeur.getPersonnes().get(idPremier);
+        this.lancerRumeur(premier);
+        this.update();
 
-
-
-        int idPremier = (int) (Math.random() * (rg.rumeur.getNbPersonnes()));
-        Personne premier = rg.rumeur.getPersonnes().get(idPremier);
-        rg.rumeur.lancerRumeur(premier, rg);
-        rg.update();
-
-        if(rg.rumeur.verifFinRumeur()) {
+        if(this.verifFinRumeur()) {
             System.out.println("Fin de la propoagtion de rumeur");
             javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur");
         }
 
         int infected = 0;
-        for (Node n : rg.graph.getEachNode()) {
+        for (Node n : this.graph.getEachNode()) {
             if(n.getAttribute("know")){
                 infected ++;
             }
         }
 
-        System.out.println(infected + "/" + rg.rumeur.getPersonnes().size() + "infected");
+        System.out.println(infected + "/" + this.rumeur.getPersonnes().size() + "infected");
+    }
 
-
+    public static void main(String argv[]){
+        RumeurGraphique rg = new RumeurGraphique(new Rumeur(200));
+        rg.startGraph();
     }
 
 

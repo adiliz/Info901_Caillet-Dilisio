@@ -14,7 +14,7 @@ public class Rumeur {
     public List<Personne> personnes = new ArrayList<Personne>();
     public int nbPersonnes;
 
-    public Rumeur(int nbPersonnes) throws InterruptedException {
+    public Rumeur(int nbPersonnes) {
         this.nbPersonnes = nbPersonnes;
         creerPersonnes(this.nbPersonnes);
         lierPersonnes();
@@ -67,60 +67,6 @@ public class Rumeur {
             System.out.println("Personne " + p.getMyId() + "{Mes voisin : " + p.getVoisins().size()+ "}");
         }
         System.err.println("nb "+personnes.size());
-    }
-
-    public void lancerRumeur(Personne p, RumeurGraphique rg) throws InterruptedException {
-        List<Personne> mesVoisins = p.getVoisins();
-
-        p.changerEtat();
-
-        rg.update();
-        System.out.println(p.getEtat());
-        if(p.getEtat() == Etat.Diffuseur) {
-            Node node = rg.graph.getNode(p.getMyId());
-            node.setAttribute("know", true);
-            float tauxTransmission;
-            float probabilité;
-
-            for (Personne voisin: mesVoisins) {
-                tauxTransmission = (float)(Math.random());
-                probabilité = (float) (Math.random());
-                if(probabilité > tauxTransmission) {
-                    voisin.changerEtat();
-                    if(voisin.getEtat() == Etat.Diffuseur) {
-                        if(! verifFinRumeur()) {
-                            Edge edge = rg.graph.getEdge(p.getMyId() + "-" + voisin.getMyId());
-                            if (edge == null) {
-                                edge = rg.graph.getEdge(voisin.getMyId() + "-" + p.getMyId());
-                                edge.setAttribute("ui.class", "highlight");
-                                Thread.sleep(200);
-                                edge.clearAttributes();
-                            }else {
-                                edge.setAttribute("ui.class", "highlight");
-                                Thread.sleep(200);
-                                edge.clearAttributes();
-                            }
-                            lancerRumeur(voisin, rg);
-                        }
-                        else {
-                            System.out.println("Fin de la propoagtion de rumeur");
-                        }
-                    }if (voisin.getEtat().equals(Etat.Etouffeur)){
-                        p.setEtat(Etat.Etouffeur);
-                    }
-                }
-            }
-        }
-
-    }
-
-    public boolean verifFinRumeur() {
-        for (Personne p: getPersonnes()) {
-            if(p.getEtat() == Etat.Diffuseur) {
-                return false;
-            }
-        }
-        return true;
     }
 
 

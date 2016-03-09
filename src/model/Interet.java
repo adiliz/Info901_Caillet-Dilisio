@@ -7,4 +7,5 @@ package model;
 public enum Interet {
     Sport,
     IT,
+    Physique
 }
