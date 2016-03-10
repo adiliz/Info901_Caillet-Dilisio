@@ -184,16 +184,15 @@ public class RumeurGraphique {
         this.lancerRumeur(premier);
         this.update();
 
-        if(this.verifFinRumeur()) {
-            System.out.println("Fin de la propoagtion de rumeur");
-            javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur");
-        }
-
         int infected = 0;
         for (Node n : this.graph.getEachNode()) {
             if(n.getAttribute("know")){
                 infected ++;
             }
+        }
+        if(this.verifFinRumeur()) {
+            System.out.println("Fin de la propoagtion de rumeur");
+            javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur\nNombre de personnes infectées: " +infected+ "/"+ this.rumeur.getPersonnes().size());
         }
 
         System.out.println(infected + "/" + this.rumeur.getPersonnes().size() + "infected");
