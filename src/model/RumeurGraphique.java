@@ -7,6 +7,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.view.Viewer;
 
 
+import java.awt.event.ActionListener;
 import java.util.List;
 
 
@@ -31,10 +32,11 @@ public class RumeurGraphique {
 
     Rumeur rumeur;
     Graph graph;
+    static Boolean canLunch = false;
 
     public RumeurGraphique(Rumeur rumeur) {
         this.rumeur = rumeur;
-        this.graph = new SingleGraph("graph");
+        this.graph = new SingleGraph(this.rumeur.nom);
 
         //ADD NODES
         for(int i=0; i<this.rumeur.getNbPersonnes(); i++) {
@@ -197,9 +199,19 @@ public class RumeurGraphique {
         System.out.println(infected + "/" + this.rumeur.getPersonnes().size() + "infected");
     }
 
-    public static void main(String argv[]){
-        RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));
-        rg.startGraph();
+    public void lancerLeGraph() {
+        this.startGraph();
+    }
+    public static void main(String argv[]) throws InterruptedException {
+        Fenetre fen = new Fenetre();
+        //RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));
+        while(canLunch == false){
+            try {
+                Thread.sleep(200);
+            } catch(InterruptedException e) {
+            }
+        }
+        fen.rg.startGraph();
     }
 
 

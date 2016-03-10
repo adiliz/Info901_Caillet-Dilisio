@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
  */
 public class Fenetre extends JFrame {
 
+    public RumeurGraphique rg;
+
     private JLabel nomLabel, typeLabel, nbPersonnesLabel, nbVoisinsMaxLabel, proportionLabel,vitesseLabel, icon;
     private JComboBox type;
     private JTextField nom, nbPersonnes, nbVoisinsMax, proportion, vitesse;
@@ -121,8 +123,8 @@ public class Fenetre extends JFrame {
 
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));
-                rg.startGraph();
+                rg = new RumeurGraphique(new Rumeur(nom.getText(), Interet.valueOf(type.getSelectedItem().toString()),Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbVoisinsMax.getText()), Integer.valueOf(proportion.getText()),Integer.valueOf(vitesse.getText())));
+                rg.canLunch = true;
             }
         });
 
@@ -142,6 +144,7 @@ public class Fenetre extends JFrame {
     }
 
     public static void main(String argv[]){
-        Fenetre fen = new Fenetre();
+
+
     }
 }
