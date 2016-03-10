@@ -176,7 +176,7 @@ public class RumeurGraphique {
 
     public void startGraph() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-        Viewer viewer = this.graph.display();
+        Viewer viewer = this.graph.display(false);
         viewer.getDefaultView().resizeFrame(1440,900);
 
         int idPremier = (int) (Math.random() * (this.rumeur.getNbPersonnes()));

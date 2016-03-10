@@ -20,7 +20,7 @@ public class Fenetre extends JFrame {
     private JTextField nom, nbPersonnes, nbVoisinsMax, proportion, vitesse;
 
     public Fenetre(){
-        this.setSize(600, 300);
+        this.setSize(650, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -40,7 +40,7 @@ public class Fenetre extends JFrame {
         //Le nom
         JPanel panNom = new JPanel();
         panNom.setBackground(Color.white);
-        panNom.setPreferredSize(new Dimension(220, 60));
+        panNom.setPreferredSize(new Dimension(250, 60));
         nom = new JTextField();
         nom.setPreferredSize(new Dimension(100, 25));
         panNom.setBorder(BorderFactory.createTitledBorder("Nom de la rumeur"));
@@ -51,7 +51,7 @@ public class Fenetre extends JFrame {
         //Le type
         JPanel panType = new JPanel();
         panType.setBackground(Color.white);
-        panType.setPreferredSize(new Dimension(220, 60));
+        panType.setPreferredSize(new Dimension(250, 60));
         panType.setBorder(BorderFactory.createTitledBorder("Type de la rumeur"));
         type = new JComboBox();
         type.addItem("Sport");
@@ -65,7 +65,7 @@ public class Fenetre extends JFrame {
         JPanel panNbPersonnes = new JPanel();
         panNbPersonnes.setBackground(Color.white);
         panNbPersonnes.setBorder(BorderFactory.createTitledBorder("Nombre de personnes"));
-        panNbPersonnes.setPreferredSize(new Dimension(220, 75));
+        panNbPersonnes.setPreferredSize(new Dimension(250, 75));
         nbPersonnes = new JTextField();
         nbPersonnes.setPreferredSize(new Dimension(100, 25));
         panNbPersonnes.setBorder(BorderFactory.createTitledBorder("Nombre de personnes"));
@@ -76,7 +76,7 @@ public class Fenetre extends JFrame {
         //Le nombre de voisins max
         JPanel panVoisins = new JPanel();
         panVoisins.setBackground(Color.white);
-        panVoisins.setPreferredSize(new Dimension(220, 75));
+        panVoisins.setPreferredSize(new Dimension(250, 75));
         panVoisins.setBorder(BorderFactory.createTitledBorder("Nombre de voisins max"));
         nbVoisinsMax = new JTextField();
         nbVoisinsMax.setPreferredSize(new Dimension(100, 25));
@@ -88,7 +88,7 @@ public class Fenetre extends JFrame {
         //La proportion
         JPanel panProportion = new JPanel();
         panProportion.setBackground(Color.white);
-        panProportion.setPreferredSize(new Dimension(220, 75));
+        panProportion.setPreferredSize(new Dimension(250, 75));
         panProportion.setBorder(BorderFactory.createTitledBorder("La proportion Ignorant/Etouffeur"));
         proportion = new JTextField();
         proportion.setPreferredSize(new Dimension(100, 25));
@@ -100,7 +100,7 @@ public class Fenetre extends JFrame {
         //La vitesse
         JPanel panVitesse = new JPanel();
         panVitesse.setBackground(Color.white);
-        panVitesse.setPreferredSize(new Dimension(220, 75));
+        panVitesse.setPreferredSize(new Dimension(250, 75));
         panVitesse.setBorder(BorderFactory.createTitledBorder("La vitesse de propagation (en milli)"));
         vitesse = new JTextField();
         vitesse.setPreferredSize(new Dimension(100, 25));
