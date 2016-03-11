@@ -33,6 +33,7 @@ public class RumeurGraphique {
     Rumeur rumeur;
     Graph graph;
     static Boolean canLunch = false;
+    long debut;
 
     public RumeurGraphique(Rumeur rumeur) {
         this.rumeur = rumeur;
@@ -192,7 +193,7 @@ public class RumeurGraphique {
         }
         if(this.verifFinRumeur()) {
             System.out.println("Fin de la propoagtion de rumeur");
-            javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur\nNombre de personnes infectées: " +infected+ "/"+ this.rumeur.getPersonnes().size());
+            javax.swing.JOptionPane.showMessageDialog(null,"Fin de la propoagtion de rumeur\nNombre de personnes infectées: " +infected+ "/"+ this.rumeur.getPersonnes().size()+"\nTemps d'exécution: "+(System.currentTimeMillis()-debut)+" millisecondes");
         }
 
         System.out.println(infected + "/" + this.rumeur.getPersonnes().size() + "infected");

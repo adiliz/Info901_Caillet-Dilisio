@@ -125,6 +125,7 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 rg = new RumeurGraphique(new Rumeur(nom.getText(), Interet.valueOf(type.getSelectedItem().toString()),Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbVoisinsMax.getText()), Integer.valueOf(proportion.getText()),Integer.valueOf(vitesse.getText())));
                 rg.canLunch = true;
+                rg.debut = System.currentTimeMillis();
             }
         });
 
