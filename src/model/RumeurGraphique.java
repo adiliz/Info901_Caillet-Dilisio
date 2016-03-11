@@ -198,9 +198,6 @@ public class RumeurGraphique {
         System.out.println(infected + "/" + this.rumeur.getPersonnes().size() + "infected");
     }
 
-    public void lancerLeGraph() {
-        this.startGraph();
-    }
     public static void main(String argv[]) throws InterruptedException {
         Fenetre fen = new Fenetre();
         //RumeurGraphique rg = new RumeurGraphique(new Rumeur("Rumeur", Interet.Sport,200, 20, 4,200));

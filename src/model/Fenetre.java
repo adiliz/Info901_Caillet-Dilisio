@@ -41,7 +41,7 @@ public class Fenetre extends JFrame {
         JPanel panNom = new JPanel();
         panNom.setBackground(Color.white);
         panNom.setPreferredSize(new Dimension(250, 60));
-        nom = new JTextField();
+        nom = new JTextField("Ma rumeur");
         nom.setPreferredSize(new Dimension(100, 25));
         panNom.setBorder(BorderFactory.createTitledBorder("Nom de la rumeur"));
         nomLabel = new JLabel("Saisir un nom :");
@@ -66,7 +66,7 @@ public class Fenetre extends JFrame {
         panNbPersonnes.setBackground(Color.white);
         panNbPersonnes.setBorder(BorderFactory.createTitledBorder("Nombre de personnes"));
         panNbPersonnes.setPreferredSize(new Dimension(250, 75));
-        nbPersonnes = new JTextField();
+        nbPersonnes = new JTextField("100");
         nbPersonnes.setPreferredSize(new Dimension(100, 25));
         panNbPersonnes.setBorder(BorderFactory.createTitledBorder("Nombre de personnes"));
         nbPersonnesLabel = new JLabel("Saisir un nombre :");
@@ -78,7 +78,7 @@ public class Fenetre extends JFrame {
         panVoisins.setBackground(Color.white);
         panVoisins.setPreferredSize(new Dimension(250, 75));
         panVoisins.setBorder(BorderFactory.createTitledBorder("Nombre de voisins max"));
-        nbVoisinsMax = new JTextField();
+        nbVoisinsMax = new JTextField("20");
         nbVoisinsMax.setPreferredSize(new Dimension(100, 25));
         panVoisins.setBorder(BorderFactory.createTitledBorder("Nombre de voisins max"));
         nbVoisinsMaxLabel = new JLabel("Saisir un nombre :");
@@ -90,7 +90,7 @@ public class Fenetre extends JFrame {
         panProportion.setBackground(Color.white);
         panProportion.setPreferredSize(new Dimension(250, 75));
         panProportion.setBorder(BorderFactory.createTitledBorder("La proportion Ignorant/Etouffeur"));
-        proportion = new JTextField();
+        proportion = new JTextField("4");
         proportion.setPreferredSize(new Dimension(100, 25));
         panProportion.setBorder(BorderFactory.createTitledBorder("La proportion Ignorant/Etouffeur"));
         proportionLabel = new JLabel("Saisir un nombre :");
@@ -102,7 +102,7 @@ public class Fenetre extends JFrame {
         panVitesse.setBackground(Color.white);
         panVitesse.setPreferredSize(new Dimension(250, 75));
         panVitesse.setBorder(BorderFactory.createTitledBorder("La vitesse de propagation (en milli)"));
-        vitesse = new JTextField();
+        vitesse = new JTextField("200");
         vitesse.setPreferredSize(new Dimension(100, 25));
         panVitesse.setBorder(BorderFactory.createTitledBorder("La vitesse de propagation (en milli)"));
         vitesseLabel = new JLabel("Saisir un nombre :");
